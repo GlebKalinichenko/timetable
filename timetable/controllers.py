@@ -9,6 +9,6 @@ def index():
     #return 'Hello World!'
     return render_template('index.html')
 
-@app.route('/timetable')
-def hello_world():
+@app.route('/about')
+def about():
     return "TimeTable " + os.environ["ENV_VAR"]
