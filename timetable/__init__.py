@@ -8,4 +8,4 @@ app.config['SERVER_NAME'] = os.environ["SERVER_NAME"] # 'localhost:5000'
 import timetable.controllers
 import timetable.api.controllers
 
-app.register_blueprint(api_part, subdomain='api', url_prefix='/v1') # /api
+app.register_blueprint(api_part, url_prefix='/api') # subdomain='api'
