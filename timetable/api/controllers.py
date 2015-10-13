@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
 from timetable.api import api_part
+from timetable.models import Faculty
 import os
+import json
 from flask import Response, request
 from functools import wraps
 
@@ -14,6 +17,19 @@ def returns_json(f):
 def index():
     return "Main"
 
+@api_part.route('/json')
+@returns_json
+def test_json():
+    cs = {}
+    knt = Faculty.objects(abbr="cs").first()
+    cs["title"] = knt.title
+    cs["abbr"] = knt.abbr
+    cs["description"] = knt.description
+    cs["groups"] = []
+    for g in knt.groups:
+        cs["groups"].append({"title": g.title, "abbr": g.abbr, "description": g.description}) 
+    return json.dumps(cs, ensure_ascii=False, indent=4)
+    
 @api_part.route('/hello')
 def index2():
     return Response('{"hello": "Hello World!"}', content_type='application/json; charset=utf-8')
