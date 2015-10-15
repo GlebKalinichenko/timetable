@@ -1,6 +1,8 @@
-from flask import Flask
+﻿# -*- coding: utf-8 -*-
+from flask import Flask, g
 from flask.ext.mongoengine import MongoEngine
 from timetable.api import api_part
+from timetable.schedule import schedule_part
 import os
 
 app = Flask(__name__)
@@ -17,5 +19,8 @@ db = MongoEngine(app)
 
 import timetable.controllers
 import timetable.api.controllers
+import timetable.schedule.controllers
+
 
 app.register_blueprint(api_part, url_prefix='/api') # subdomain='api'
+app.register_blueprint(schedule_part, url_prefix='/schedule') # subdomain='schedule'
