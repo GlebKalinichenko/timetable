@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 from timetable.schedule import schedule_part
 from timetable.models import Faculty, Lecturer, Group, Weekday
+from timetable.helpers import get_faculties
+
 import os
 import json
 from flask import Response, request, g, render_template
-
-def get_faculties():
-    if not hasattr(g, 'faculties'):
-        g.faculties = Faculty.objects.all()
-    return g.faculties
 
 @schedule_part.route('/')
 def index():

@@ -2,13 +2,9 @@
 from timetable import app
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, send_from_directory
-from models import Faculty     
+from models import Faculty
+from helpers import get_faculties
 import os
-
-def get_faculties():
-    if not hasattr(g, 'faculties'):
-        g.faculties = Faculty.objects.all()
-    return g.faculties
 
 @app.route('/')
 def index():
@@ -28,7 +24,7 @@ def mobile():
 def help():
     data={
         "page": "help",
-        "title": int("Help"),
+        "title": "Help",
         "page_name": "Help"
         
     }
