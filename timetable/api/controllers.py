@@ -30,9 +30,9 @@ def test_json():
         cs["groups"].append({"title": g.title, "abbr": g.abbr, "description": g.description}) 
     return json.dumps(cs, ensure_ascii=False, indent=4)
     
-@api_part.route('/hello')
-def index2():
-    return Response('{"hello": "Hello World!"}', content_type='application/json; charset=utf-8')
+@api_part.route('/hello/<m>.<a>')
+def index2(m, a):
+    return '{' + m + " " + a + '}'#Response('{"hello": "Hello World!"}', content_type='application/json; charset=utf-8')
 
 @api_part.route('/help')
 @returns_json

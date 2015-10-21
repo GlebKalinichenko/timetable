@@ -29,7 +29,7 @@ def faculty(faculty='all'):
         return str(faculty) + " " + "<br />".join(fs)
     else:
         return "Post"
-        
+  
 @schedule_part.route('/lecturers/', methods=['GET', 'POST'])
 @schedule_part.route('/lecturer/<lecturer>', methods=['GET', 'POST'])
 def lecturer(lecturer='all'):
