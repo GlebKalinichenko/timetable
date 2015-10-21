@@ -97,7 +97,7 @@ class Lesson(db.Document):
     weekday = db.IntField(min_value=1, max_value=7, required=True)          # День недели (пн=1, вт=2, ср=3, ...)
     week = db.IntField(min_value=0, max_value=2, required=True, default=2)  # Неделя(верхняя=0, нижняя=1, любая=2)
     subgroup = db.IntField(min_value=0, max_value=256, required=True, default=256) # Подгруппа 0 - вся группа (0, 1, 2, 3, 4 ...)
-    group = db.ReferenceField('Group', required=True)
+    groups = db.ListField(db.ReferenceField('Group'), required=True)
     lecturer = db.ReferenceField('Lecturer', required=True)
 
     
