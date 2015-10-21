@@ -1,0 +1,15 @@
+<nav id="nav">
+    <ul>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li>
+            <a href="{{ url_for('schedule_part.index') }}">Schedule</a>
+            <ul>
+                <li><a href="{{ url_for('schedule_part.lecturer') }}">By lecturer</a></li>
+                <li><a href="{{ url_for('schedule_part.group') }}">By group</a></li>
+            </ul>
+        </li>
+        <li><a href="{{ url_for('mobile') }}">Mobile</a></li>
+        <li><a href="{{ url_for('help') }}">Help</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+    </ul>
+</nav>

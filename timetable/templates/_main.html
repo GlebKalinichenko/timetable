@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<!--
+	Helios by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Timetable DonNTU | {{data["title"]}}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" href="{{ url_for('static', filename='config_date.ico') }}">
+		<!--[if lte IE 8]><script src="{{ url_for('static', filename='assets/js/ie/html5shiv.js')}}"></script><![endif]-->
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/main.css') }}">
+		<!--[if lte IE 8]><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/ie8.css') }}" /><![endif]-->
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				{% include '_header.html' %}
+
+			<!-- Main -->
+                {% if data["page"] == 'mobile' %}
+                    {% include 'mobile.html' %}
+                {% elif data["page"] == 'help' %}
+                    {% include 'help.html' %}
+                {% elif data["page"] == 'about' %}
+                    {% include 'about.html' %}
+                {% else %}
+                    {% include '_error.html' %}
+                {% endif %}
+                
+
+			<!-- Footer -->
+				{% include '_footer.html' %}
+
+		</div>
+
+		<!-- Scripts -->
+			{% include '_include_scripts.html' %}
+
+	</body>
+</html>
