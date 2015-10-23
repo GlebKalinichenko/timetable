@@ -58,7 +58,7 @@ def not_found(e):
     return render_template('_main.html', data=data), 404
     
 @app.errorhandler(500)
-def not_found(e):
+def server_error(e):
     data={
         "page": "error",
         "title": "500: Internal Server Error",

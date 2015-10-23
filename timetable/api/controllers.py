@@ -3,8 +3,15 @@ from timetable.api import api_part
 from timetable.models import Faculty
 import os
 import json
+import engine
 from flask import Response, request
 from functools import wraps
+
+CURRENT_API_V = "0.1"
+APIS = {
+    "0.1": engine.v0_1,
+    "0.2": engine.v0_2,
+}
 
 def returns_json(f):
     @wraps(f)
@@ -34,18 +41,26 @@ def test_json():
 def index2(m, a):
     return '{' + m + " " + a + '}'#Response('{"hello": "Hello World!"}', content_type='application/json; charset=utf-8')
 
-@api_part.route('/help')
+@api_part.route('/<path:invalid_path>')
 @returns_json
-def hello_world2():
-    return "{\"key\": \"TimeTable " + os.environ["ENV_VAR"] + "\"}"
+def other(invalid_path):
+    #http://stackoverflow.com/questions/19660013/flask-per-blueprint-error-pages
+    return engine.error(9) #invalid_path
 
-#@api_part.route('/method/')    
-@api_part.route('/method/', methods=['GET', 'POST'], defaults={'api_method': "TEst"})
-@api_part.route('/method/<api_method>', methods=['GET', 'POST'])
+@api_part.route('/<entity>.<method>', methods=['GET', 'POST'])
 @returns_json
-def method(api_method=None):
-    if request.method == 'GET':
-        return "{\"key\": \"" + str(api_method) + "\"}"
-    else:
-        return "Post"
+def method(entity=None, method=None):
+    # request.query_string
+    # http://flask.pocoo.org/docs/0.10/api/#response-objects
+
+    ver = request.args.get("v", CURRENT_API_V)
+
+    if not (ver in APIS):
+        return engine.error(1)
     
+    tapi = APIS.get(ver, APIS[CURRENT_API_V])()
+  
+    if request.method == 'GET':
+        return tapi.execute(entity, method, request.args)
+    elif request.method == 'POST':
+        return engine.error(2)
