@@ -447,7 +447,9 @@ class v0_1(object):
             group = Group.objects(abbr=group_abbr).first()
             if group == None:
                 return error(15)
-                
+            
+            group_id = group.id
+            
             r = self.get_excellent_dict()
             r["response"] = OrderedDict()
             r["response"]["abbr"] = group.abbr
@@ -468,6 +470,7 @@ class v0_1(object):
             
             for i in lessons:           
                 l = OrderedDict()
+                
                 l["title"] = i.title
                 l["room"] = i.room
                 l["lecturer"] = i.lecturer.name
@@ -477,6 +480,13 @@ class v0_1(object):
                 l["week_number"] = i.week
                 l["week"] = Week.get_string(i.week)
                 l["description"] = i.description
+                
+                try:
+                    sb = filter(lambda o: o.group.id == group_id, i.subgroups)[0].subgroup
+                    l["subgroup"] = [sb] if sb == SubgroupHelper.ALL else SubgroupHelper.get_numbers(sb)
+                except:
+                    pass
+                
                 r["response"]["lessons"].append(l)
             
             return self.dump_dict(r)
